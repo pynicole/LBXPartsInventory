@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Parts Inventory</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        form {
+            margin: 20px 0;
+        }
+        input[type="text"], input[type="number"] {
+            width: 200px;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Parts Inventory</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Part #</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="part : ${allParts}">
+            <td th:text="${part.partNumber}"></td>
+            <td th:text="${part.quantity}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Add a New Part</h2>
+<form th:action="@{/addPart}" th:object="${part}" method="post">
+    <input type="text" th:field="*{partNumber}" placeholder="Part #" required/>
+    <input type="number" th:field="*{quantity}" placeholder="Quantity" required/>
+    <button type="submit">Add Part</button>
+</form>
+
+<h2>Delete a Part</h2>
+<form th:action="@{/deletePart}" method="post">
+    <input type="text" name="partNumber" placeholder="Part # to Delete" required/>
+    <button type="submit">Delete Part</button>
+</form>
+
+</body>
+</html>
